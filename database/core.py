@@ -37,14 +37,14 @@ class Phone(Field):
     """
     phone number: exactly 10 digits
     """
-    FORMAT = re.compile(r'(?:\+?\d{1,3}|0)\d{6,12}')
+    FORMAT = re.compile(r'^[0-9]{10}$')
 
     def __init__(self, value):
         """
         validate the phone: exactly 10 digits, otherwise raise ValueError
         """
         if not re.fullmatch(self.FORMAT, value):
-            raise ValueError('Phone number has an invalid format.')
+            raise ValueError('Phone must be correct: 10 numbers.')
         super().__init__(value)
 
     def __str__(self) -> str:

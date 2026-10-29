@@ -1,4 +1,4 @@
-дfrom colorama import Fore
+from colorama import Fore
 
 from database import AddressBook, Record
 from utils import input_error, validate_args

@@ -1,6 +1,7 @@
 import pickle
 
 from functools import wraps
+
 from colorama import Fore
 
 from database import AddressBook
@@ -47,7 +48,7 @@ def validate_args(args_count: list[int], usage: str):
     return decorator
 
 
-def save_data(book, filename="addressbook.pkl"):
+def save_data(book: AddressBook, filename: str = "addressbook.pkl") -> None:
     """
     save the address book to a file with pickle (the file is overwritten)
     :param book: AddressBook
@@ -57,14 +58,18 @@ def save_data(book, filename="addressbook.pkl"):
         pickle.dump(book, f)
 
 
-def load_data(filename="addressbook.pkl"):
+def load_data(filename: str = "addressbook.pkl") -> AddressBook:
     """
     load the address book saved by save_data
     :param filename: path to the file: str
-    :return: AddressBook from the file, or a new empty AddressBook if the file does not exist
+    :return: AddressBook from the file, or a new empty AddressBook if the file does not exist,
+        is empty or damaged, or holds something that is not an AddressBook
     """
     try:
         with open(filename, "rb") as f:
-            return pickle.load(f)
-    except FileNotFoundError:
+            book = pickle.load(f)
+            if isinstance(book, AddressBook):
+                return book
+            return AddressBook()
+    except (FileNotFoundError, EOFError, ValueError, pickle.UnpicklingError):
         return AddressBook()
