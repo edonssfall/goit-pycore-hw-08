@@ -1,4 +1,4 @@
-# goit-pycore-hw-07
+# goit-pycore-hw-08
 
 Assistant bot with an address book: contacts, phones and birthdays.
 
